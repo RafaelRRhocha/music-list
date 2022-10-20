@@ -19,7 +19,13 @@ const Search: FC<SearchProps> = ({}) => {
           onChange={ ({ target: { value }}) => getArtistName(value)}
           type="text"
         />
-        <button disabled={ artist.length < 2 } type="button">Pesquisar</button>
+        <button
+          disabled={ artist.length < 2 }
+          type="button"
+          onClick={ () => setArtist('')}
+        >
+          Pesquisar
+        </button>
       </form>
     </div>
   );
