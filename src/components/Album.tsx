@@ -1,18 +1,37 @@
 import { useRouter } from 'next/router';
-import type { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import getMusics from '../utils/getMusics';
 import Header from './Header';
+import MusicCard from './MusicCard';
 
 interface AlbumProps {}
 
 const Album: FC<AlbumProps> = ({}) => {
   const router = useRouter();
-  const { id } = router.query
+  const { id } = router.query;
+
+  const [musics, setMusics] = useState([]);
+
+  useEffect(() => {
+    const musicsQuery = async () => {
+      const query = await getMusics(id)
+      const queryFiltered = query.filter(({ previewUrl }: any) => previewUrl)
+      setMusics(queryFiltered)
+    };
+    musicsQuery();
+  }, []);
 
   return (
-    <div>
+    <>
       <Header />
-      <p>{`Tela de Album ${id}`}</p>
-    </div>
+      {musics.map(({trackId, artistName, collectionName, previewUrl}) => (
+        <div key={ trackId }>
+          <p>{ artistName }</p>
+          <p>{ collectionName }</p>
+          <MusicCard previewUrl={ previewUrl } artistName={ artistName } />
+        </div>
+      ))}
+    </>
   );
 }
 
