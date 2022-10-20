@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { FC } from 'react';
 import { getUser } from '../localStorage';
 
@@ -9,7 +10,18 @@ const Header: FC<HeaderProps> = ({}) => {
   return (
     <header>
       {!user ? <p>loading</p> : (
-        <p>{`Olá! ${user}`}</p>
+        <nav>
+          <p>{`Olá! ${user}`}</p>
+          <Link href="/search">
+            <button type="button">Pesquisar</button>
+          </Link>
+          <Link href="/favorites">
+            <button type="button">Favoritas</button>
+          </Link>
+          <Link href="/profile">
+            <button type="button">Perfil</button>
+          </Link>
+        </nav>
       )}
     </header>
   );
