@@ -1,14 +1,17 @@
 import type { FC } from 'react';
-import { saveFavorite } from '../utils/createFavorites';
+import { removeFavorite, saveFavorite } from '../utils/createFavorites';
 
 interface MusicCardProps {
   previewUrl: string
   artistName: string
+  favorite: boolean
+  trackId?: number
 }
 
-const MusicCard: FC<MusicCardProps> = ({ previewUrl, artistName }) => {
+const MusicCard: FC<MusicCardProps> = ({ previewUrl, artistName, favorite, trackId }) => {
   return (
     <>
+      <p>{artistName}</p>
       <audio
           src={ previewUrl }
           controls
@@ -18,12 +21,16 @@ const MusicCard: FC<MusicCardProps> = ({ previewUrl, artistName }) => {
           <code>audio</code>
           .
       </audio>
-      <label>
-        Favorita
-        <input type="checkbox" onClick={() => {
-          saveFavorite({ previewUrl, artistName })
-        }} />
-      </label>
+      {favorite ? (
+        <label>
+          Favorita
+          <input type="checkbox" onClick={() => {
+            saveFavorite({ previewUrl, artistName, trackId })
+          }} />
+        </label>
+      ) : (
+        <button type="button" onClick={() => removeFavorite(trackId)}>Excluir Favorita</button>
+      )}
     </>
   );
 }

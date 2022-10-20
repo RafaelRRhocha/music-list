@@ -19,16 +19,14 @@ const Album: FC<AlbumProps> = ({}) => {
       setMusics(queryFiltered)
     };
     musicsQuery();
-  }, []);
+  }, [id]);
 
   return (
     <>
       <Header />
-      {musics.map(({trackId, artistName, collectionName, previewUrl}) => (
+      {musics.map(({trackId, artistName, previewUrl}) => (
         <div key={ trackId }>
-          <p>{ artistName }</p>
-          <p>{ collectionName }</p>
-          <MusicCard previewUrl={ previewUrl } artistName={ artistName } />
+          <MusicCard previewUrl={ previewUrl } artistName={ artistName } trackId={ trackId } favorite />
         </div>
       ))}
     </>
